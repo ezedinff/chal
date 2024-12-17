@@ -2,7 +2,7 @@
 ## Projects
 
 ### BeerApi
-- **Development Time**: ~30 minutes
+- **Development Time**: ~1:30 minutes
 - **Technologies**: .NET, REST API
 
 ### JavascriptTest
