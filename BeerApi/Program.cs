@@ -1,13 +1,27 @@
 using BeerApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using BeerApi.Validators;
+using BeerApi.Services;
+using BeerApi.Mappings;
+using BeerApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateBeerDtoValidator>();
+
 builder.Services.AddDbContext<BeerDbContext>(options =>
     options.UseInMemoryDatabase("BeerDb"));
+
+builder.Services.AddScoped<IBeerService, BeerService>();
+builder.Services.AddAutoMapper(typeof(BeerMappingProfile));
+builder.Services.AddScoped<IBeerRepository, BeerRepository>();
 
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
